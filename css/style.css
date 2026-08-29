@@ -140,7 +140,7 @@ footer {
 
 /* ===== Interrupteur thème clair/sombre (haut à droite) ===== */
 .theme-toggle {
-  position: fixed;
+  position: absolute;
   top: 12px;
   right: 16px;
   z-index: 1000;
@@ -169,5 +169,21 @@ footer {
 @media (max-width: 576px) {
   .title-part {
     display: block;
+  }
+
+  .theme-toggle {
+    padding: 4px 8px;
+    gap: 4px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .theme-toggle i {
+    font-size: 0.8rem;
+  }
+
+  .theme-toggle .form-check-input {
+    width: 1.8em;
+    height: 1em;
   }
 }
