@@ -1,10 +1,10 @@
-// Gestion des cartes cochables avec sauvegarde en sessionStorage
+// Gestion des cartes cochables avec sauvegarde en localStorage
 
 const STORAGE_KEY = "cardsSelection";
 
 // Récupère l'objet de sélection stocké (ou objet vide si rien de stocké)
 function getStoredSelection() {
-  const raw = sessionStorage.getItem(STORAGE_KEY);
+  const raw = localStorage.getItem(STORAGE_KEY);
   try {
     return raw ? JSON.parse(raw) : {};
   } catch (e) {
@@ -14,7 +14,7 @@ function getStoredSelection() {
 
 // Sauvegarde l'objet de sélection complet
 function saveSelection(selection) {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
 }
 
 // Applique visuellement l'état coché/décoché sur une carte
