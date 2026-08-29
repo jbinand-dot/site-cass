@@ -49,6 +49,30 @@ function updateCounter(total) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const themeSwitch = document.getElementById("theme-switch");
+  const THEME_KEY = "siteTheme"; // clé globale, pas liée à une page en particulier
+
+  if (themeSwitch) {
+    // Applique le thème sauvegardé au chargement (clair si "light", sinon sombre par défaut)
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === "light") {
+      document.body.classList.add("light-theme");
+      themeSwitch.checked = true;
+    }
+
+    themeSwitch.addEventListener("change", () => {
+      if (themeSwitch.checked) {
+        document.body.classList.add("light-theme");
+        localStorage.setItem(THEME_KEY, "light");
+      } else {
+        document.body.classList.remove("light-theme");
+        localStorage.setItem(THEME_KEY, "dark");
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
   const cards = document.querySelectorAll(".card-select");
   const stored = getStoredSelection();
   const total = cards.length;
