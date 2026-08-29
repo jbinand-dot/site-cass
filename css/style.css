@@ -166,3 +166,8 @@ footer {
   background-color: var(--theme-jaune);
   border-color: var(--theme-jaune);
 }
+@media (max-width: 576px) {
+  .title-part {
+    display: block;
+  }
+}
