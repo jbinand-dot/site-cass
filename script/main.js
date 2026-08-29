@@ -1,6 +1,9 @@
 // Gestion des cartes cochables avec sauvegarde en localStorage
+// La clé de stockage inclut le nom de la page (ex: index.html, luxray.html, Luxio.html)
+// pour que les sélections ne se mélangent pas d'une page à l'autre.
 
-const STORAGE_KEY = "cardsSelection";
+const pageName = window.location.pathname.split("/").pop() || "index.html";
+const STORAGE_KEY = "cardsSelection_" + pageName;
 
 // Récupère l'objet de sélection stocké (ou objet vide si rien de stocké)
 function getStoredSelection() {
@@ -24,7 +27,7 @@ function setCardState(cardEl, checked) {
   cardEl.classList.toggle("checked", checked);
 }
 
-// Met à jour le sessionStorage pour une carte donnée
+// Met à jour le localStorage pour une carte donnée
 function updateStorage(id, checked) {
   const selection = getStoredSelection();
   if (checked) {
@@ -35,9 +38,20 @@ function updateStorage(id, checked) {
   saveSelection(selection);
 }
 
+// Met à jour les compteurs "Trouvé" / "Manquant" affichés sur la page (si présents)
+function updateCounter(total) {
+  const foundEl = document.getElementById("card-counter-found");
+  const missingEl = document.getElementById("card-counter-missing");
+  const checkedCount = document.querySelectorAll(".card-select.checked").length;
+
+  if (foundEl) foundEl.textContent = checkedCount;
+  if (missingEl) missingEl.textContent = total - checkedCount;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const cards = document.querySelectorAll(".card-select");
   const stored = getStoredSelection();
+  const total = cards.length;
 
   cards.forEach((card) => {
     const id = card.dataset.id;
@@ -54,12 +68,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const newState = !checkbox.checked;
       setCardState(card, newState);
       updateStorage(id, newState);
+      updateCounter(total);
     });
 
     // Clic direct sur la checkbox
     checkbox.addEventListener("change", () => {
       setCardState(card, checkbox.checked);
       updateStorage(id, checkbox.checked);
+      updateCounter(total);
     });
   });
+
+  // Affiche le compteur dès le chargement de la page
+  updateCounter(total);
 });
