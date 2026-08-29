@@ -4,3 +4,39 @@ body {
     -moz-user-select: none;    /* Firefox */
     -ms-user-select: none;     /* Ancien Edge */
 }
+.card-select {
+    position: relative;
+    cursor: pointer;
+}
+.card-select .card-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(25, 135, 84, 0.55); /* vert bootstrap "success" */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+.card-select .card-overlay i {
+    font-size: 2.5rem;
+    color: #fff;
+}
+.card-select input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 2;
+}
+.card-select.checked .card-overlay {
+    opacity: 1;
+}
+.card-select.checked .card {
+    border: 2px solid #198754;
+}
